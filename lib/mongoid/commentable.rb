@@ -19,8 +19,9 @@ module Mongoid::Commentable
   end
 
   def comments_list(sort=:asc, page=1, limit=10)
-    if Comment.respond_to?(sort)
-      comments.send(sort,:created_at).limit(limit).skip( (page - 1)*limit )
+    sort_key = "#{sort}ending".to_sym # using the full method name avoids issue with Rake::DSL stomping on mongoid :desc alias
+    if Comment.respond_to?(sort_key)
+      comments.send(sort_key,:created_at).limit(limit).skip( (page - 1)*limit )
     else
       raise ArgumentError, "Wrong argument!"
     end
