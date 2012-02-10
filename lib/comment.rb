@@ -3,7 +3,6 @@ module Mongoid_Commentable
     extend ActiveSupport::Concern
 
     included do |base|
-      include Mongoid::Timestamps
       base.attr_accessible :path,:parent
       base.field :path, :type => String, :default => ""
       base.field :parent, :type => String
